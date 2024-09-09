@@ -1,0 +1,54 @@
+@import "../../styles.scss";
+
+.navbarComponent {
+    padding: 0 10px;
+    height: 56px;
+    background-color: $navbarColor;
+    display: flex;
+    justify-content: space-between;
+
+    .logo {
+        img {
+            height: 100%;
+        }
+    }
+
+    .navbarMenu {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+
+        span.active {
+            position: relative;
+            color: white;
+
+            &::before {
+                content: "";
+                position: absolute;
+                background-color: white;
+                height: 5px;
+                width: 100px;
+                bottom: 0;
+                left: -15px;
+            }
+        }
+
+        span {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            color: $navbarTextColor;
+            text-transform: uppercase;
+            font-size: .9rem;
+        }
+
+        .userProfile {
+            color: white;
+            padding: 8px;
+            border-radius: 50%;
+            border: 2px solid $navbarTextColor;
+        }
+    }
+
+
+}
