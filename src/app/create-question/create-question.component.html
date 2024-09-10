@@ -1,4 +1,4 @@
-<div class="createQuestionSection" >
+<div class="createQuestionSection">
     <div class="inputField">
         <input type="text" name="question" id="question" [(ngModel)]="questionData.question" />
         <label for="question">Question(Stem)*</label>
@@ -47,12 +47,12 @@
         </div>
     </div>
 
-    <div class="correctAnsDiv" cdkDropListGroup >
+    <div class="correctAnsDiv" cdkDropListGroup>
         <p class="label">Correct Answer*</p>
-        <div class="question" [innerHTML]="getFormattedText()" cdkDropList [cdkDropListData]="responses" (cdkDropListDropped)="onDrop($event)">
-    
-        </div> 
-        <div class="responseOptions" cdkDropList [cdkDropListData]="responses" (cdkDropListDropped)="onDrop($event)" >
+        <div class="question" [innerHTML]="getFormattedText()" cdkDropList [cdkDropListData]="tokan"
+            (cdkDropListDropped)="onDrop($event)">
+        </div>
+        <div class="responseOptions" cdkDropList [cdkDropListData]="responses" (cdkDropListDropped)="onDrop($event)">
             <div class="responseOption" *ngFor="let option of questionData.responses; let i = index" cdkDrag>
                 <span class="material-symbols-outlined icon">drag_indicator</span>
                 <div class="option">{{ option.response ? option.response : 'Response ' + (i + 1) }}</div>

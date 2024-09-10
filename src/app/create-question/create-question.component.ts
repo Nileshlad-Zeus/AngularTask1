@@ -61,11 +61,13 @@ export class CreateQuestionComponent {
   width: 90px;
   height: 32px;
   border: 1px dashed rgba(0, 0, 0, 0.77);
-  display: inline-block; text-align: center; line-height: 32px; box-sizing: border-box; position:relative; top:10px"> </span>`);
+  display: inline-block; text-align: center; line-height: 32px; box-sizing: border-box; position:relative; top:10px"> 
+      ${this.tokan[0]}
+      </span>`);
     return this.sanitizer.bypassSecurityTrustHtml(rawHtml);
   }
 
-  onDrop(event: CdkDragDrop<any>) {
+  onDrop(event: CdkDragDrop<string[]>) {
     console.log("Droped");
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
