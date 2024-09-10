@@ -7,6 +7,6 @@ import { CreateNewQuestionHeaderComponent } from './create-new-question-header.c
   ],
   imports: [
   ],
-  exports:[CreateNewQuestionHeaderComponent]
+  exports: [CreateNewQuestionHeaderComponent]
 })
-export class CreateNewQuestionHeaderModule{ }
+export class CreateNewQuestionHeaderModule { }

@@ -1,27 +1,62 @@
-<div class="createQuestionSection">
+<div class="createQuestionSection" >
     <div class="inputField">
-        <input type="text" name="question" id="question" />
+        <input type="text" name="question" id="question" [(ngModel)]="questionData.question" />
         <label for="question">Question(Stem)*</label>
-      </div>
+    </div>
     <div class="inputField">
-        <input type="text" name="textphrase" id="textphrase" />
+        <!-- <input type="text" name="textphrase" id="textphrase" [(ngModel)]="questionData.textPhrase" /> -->
+        <textarea name="textphrase" id="textphrase" [(ngModel)]="questionData.textPhrase" (input)="autoGrow($event)"
+            #textAreaElement> </textarea>
         <label for="textphrase">Text Phrase*</label>
-      </div>
+    </div>
+    <br>
+    <button class="btn addTokenBtn" (click)="addToken(textAreaElement)">Add Token</button>
+
+
     <div class="responsesDiv">
         <p class="label">Responses*</p>
         <div class="responseOptions">
-            <div class="option">
+            <div *ngFor="let option of questionData.responses; let i = index" class="option">
                 <div class="optionInputDiv">
-                    <span class="material-symbols-outlined">
-                        drag_indicator
-                        </span>
-                    <input type="text" placeholder="Response 1">
+                    <span class="material-symbols-outlined">drag_indicator</span>
+                    <input type="text" [placeholder]="'Response ' + (i + 1)" [(ngModel)]="option.response">
                 </div>
-                <span class="material-symbols-outlined">
-                    delete
+                <span class="material-symbols-outlined icon delete-icon" (click)="removeResponse(i)">delete</span>
+            </div>
+        </div>
+        <button class="addResonseBtn btn" (click)="addResponse()">Add Response</button>
+    </div>
+
+    <div class="setCorrectAnsDiv">
+        <p class="label">Set Correct Answers*</p>
+        <div class="setCorrectAnsDiv-options">
+            <div class="option">
+                <input type="checkbox" name="shuffleResponses" id="shuffleResponses">
+                <label for="shuffleResponses">Shuffle Responses</label>
+                <span class="material-symbols-outlined icon">
+                    help
+                </span>
+            </div>
+            <div class="option">
+                <input type="checkbox" name="duplicateResponses" id="duplicateResponses">
+                <label for="duplicateResponses">Duplicate Responses</label>
+                <span class="material-symbols-outlined icon">
+                    help
                 </span>
             </div>
         </div>
-        <button>Add Response</button>
+    </div>
+
+    <div class="correctAnsDiv" cdkDropListGroup >
+        <p class="label">Correct Answer*</p>
+        <div class="question" [innerHTML]="getFormattedText()" cdkDropList [cdkDropListData]="responses" (cdkDropListDropped)="onDrop($event)">
+    
+        </div> 
+        <div class="responseOptions" cdkDropList [cdkDropListData]="responses" (cdkDropListDropped)="onDrop($event)" >
+            <div class="responseOption" *ngFor="let option of questionData.responses; let i = index" cdkDrag>
+                <span class="material-symbols-outlined icon">drag_indicator</span>
+                <div class="option">{{ option.response ? option.response : 'Response ' + (i + 1) }}</div>
+            </div>
+        </div>
     </div>
 </div>
