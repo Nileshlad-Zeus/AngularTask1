@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarModule } from './navbar/navbar.module';
@@ -14,7 +13,6 @@ import { CreateQuestionModule } from './create-question/create-question.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    DragDropModule,
     NavbarModule,
     CreateNewQuestionHeaderModule,
     CreateQuestionModule
