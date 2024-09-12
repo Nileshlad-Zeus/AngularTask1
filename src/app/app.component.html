@@ -1,3 +1,5 @@
 <app-navbar></app-navbar>
-<app-create-new-question-header></app-create-new-question-header>
-<app-create-question></app-create-question>
+<app-create-new-question-header *ngIf="currentPath === 'create-question'"></app-create-new-question-header>
+<!-- <app-create-question></app-create-question> -->
+<router-outlet>
+</router-outlet>

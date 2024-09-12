@@ -1,3 +1,44 @@
-<div class="createQuestionHeader">
-    
+<div class="createNewQuestionHeader">
+    <div class="backBtn">
+        <span class="material-symbols-outlined">
+            arrow_back
+        </span>
+    </div>
+    <div class="heading">Create New Question</div>
+    <div class="btnGroup">
+        <button>Cancle</button>
+        <button>Publish</button>
+        <button>Save</button>
+    </div>
+</div>
+
+<div class="createNewQuestionSubHeader">
+    <div class="testName">
+        Drag & Drop
+        <span>(Locked)</span>
+    </div>
+    <div class="btnGroup">
+        <button class="btn-secondary"><span class="material-symbols-outlined icon">
+                lock_open
+            </span>Unlock</button>
+        <a class="btn-secondary" (click)="preview()"><span class="material-symbols-outlined icon">
+                visibility
+            </span>Save and Preview</a>
+    </div>
+</div>
+
+<div class="progressDiv-Body">
+    <div class="progressDiv">
+        <div class="progressStep">
+            <span class="material-symbols-outlined">
+                edit
+            </span>
+            <p>Question Properties</p>
+        </div>
+        <hr />
+        <div class="progressStep">
+            <span>2</span>
+            <p>Question Content</p>
+        </div>
+    </div>
 </div>

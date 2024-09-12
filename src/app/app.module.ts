@@ -5,17 +5,19 @@ import { AppComponent } from './app.component';
 import { NavbarModule } from './navbar/navbar.module';
 import { CreateNewQuestionHeaderModule } from './create-new-question-header/create-new-question-header.module';
 import { CreateQuestionModule } from './create-question/create-question.module';
+import { PreviewQuestionModule } from './preview-question/preview-question.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NavbarModule,
     CreateNewQuestionHeaderModule,
-    CreateQuestionModule
+    CreateQuestionModule,
+    PreviewQuestionModule
   ],
   bootstrap: [AppComponent]
 })

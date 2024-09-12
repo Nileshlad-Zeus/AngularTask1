@@ -1,69 +1,70 @@
-<div class="createQuestionSection">
-    <div class="inputField">
-        <input type="text" name="question" id="question" [(ngModel)]="questionData.question" />
-        <label for="question">Question(Stem)*</label>
-    </div>
-    <div class="inputField">
-        <!-- <input type="text" name="textphrase" id="textphrase" [(ngModel)]="questionData.textPhrase" /> -->
-        <!-- <textarea name="textphrase" id="textphrase" [(ngModel)]="questionData.textPhrase" (input)="autoGrow($event)"
-            #textAreaElement> </textarea> -->
-        <div class="textphrase" contenteditable="true" (input)="updateTextPhrase()"  #textAreaElement>
+
+<div class="body">
+    <div class="createQuestionSection">
+        <div class="inputField">
+            <input type="text" name="question" id="question" [(ngModel)]="questionData.question"
+                (ngModelChange)="onResponseChangeQuestion($event)" />
+            <label for="question" #questionlabel>Question(Stem)*</label>
         </div>
-        <!-- <label for="textphrase">Text Phrase*</label> -->
-    </div>
-    <br>
-    <button class="btn addTokenBtn" (click)="addToken()">Add Token</button>
+        <div class="inputField textPhraseDiv">
+            <div class="textphrase" contenteditable="true" (input)="updateTextPhrase()" #textAreaElement>
+            </div>
+            <label for="textphrase">Text Phrase*</label>
+        </div>
+        <br>
+        <button class="btn addTokenBtn" (click)="addToken()">Add Token</button>
 
-
-    <div class="responsesDiv">
-        <p class="label">Responses*</p>
-        <div class="responseOptions">
-            <div *ngFor="let option of questionData.responses; let i = index" class="option">
-                <div class="optionInputDiv">
-                    <span class="material-symbols-outlined">drag_indicator</span>
-                    <input type="text" [placeholder]="'Response ' + (i + 1)" [(ngModel)]="option.response"
-                        (ngModelChange)="onResponseChange($event, i)">
+        <div class="responsesDiv">
+            <p class="label">Responses*</p>
+            <div class="responseOptions">
+                <div *ngFor="let option of questionData.responses; let i = index" class="option">
+                    <div class="optionInputDiv">
+                        <span class="material-symbols-outlined">drag_indicator</span>
+                        <input type="text" [placeholder]="'Response ' + (i + 1)" [(ngModel)]="option.response"
+                            (ngModelChange)="onResponseChange($event)">
+                    </div>
+                    <span class="material-symbols-outlined icon delete-icon" (click)="removeResponse(i)">delete</span>
                 </div>
-                <span class="material-symbols-outlined icon delete-icon" (click)="removeResponse(i)">delete</span>
             </div>
-        </div>
-        <button class="addResonseBtn btn" (click)="addResponse()">Add Response</button>
-    </div>
-
-    <div class="setCorrectAnsDiv">
-        <p class="label">Set Correct Answers*</p>
-        <div class="setCorrectAnsDiv-options">
-            <div class="option">
-                <input type="checkbox" name="shuffleResponses" id="shuffleResponses">
-                <label for="shuffleResponses">Shuffle Responses</label>
-                <span class="material-symbols-outlined icon">
-                    help
-                </span>
-            </div>
-            <div class="option">
-                <input type="checkbox" name="duplicateResponses" id="duplicateResponses">
-                <label for="duplicateResponses">Duplicate Responses</label>
-                <span class="material-symbols-outlined icon">
-                    help
-                </span>
-            </div>
-        </div>
-    </div>
-
-    <div class="correctAnsDiv" cdkDropListGroup>
-        <p class="label">Correct Answer*</p>
-        <!-- <div class="question" [innerHTML]="getFormattedText()">
-        </div> -->
-        <div #draggableElement class="question" [innerHTML]="questionData.textPhrase">
+            <button class="addResonseBtn btn" (click)="addResponse()">Add Response</button>
         </div>
 
-
-        <div class="responseOptions">
-            <div class="responseOption" *ngFor="let option of responses; let i = index" draggable="true"
-                (dragstart)="drag($event, option)">
-                <span class="material-symbols-outlined icon">drag_indicator</span>
-                <div class="option">{{ option ? option : 'Response ' + (i + 1) }}</div>
+        <div class="setCorrectAnsDiv">
+            <p class="label">Set Correct Answers*</p>
+            <div class="setCorrectAnsDiv-options">
+                <div class="option">
+                    <input type="checkbox" name="shuffleResponses" id="shuffleResponses">
+                    <label for="shuffleResponses">Shuffle Responses</label>
+                    <span class="material-symbols-outlined icon">
+                        help
+                    </span>
+                </div>
+                <div class="option">
+                    <input type="checkbox" name="duplicateResponses" id="duplicateResponses">
+                    <label for="duplicateResponses">Duplicate Responses</label>
+                    <span class="material-symbols-outlined icon">
+                        help
+                    </span>
+                </div>
             </div>
+        </div>
+
+        <div class="correctAnsDiv">
+            <p class="label">Correct Answer*</p>
+            <div #draggableElement class="question" [innerHTML]="questionData.textPhrase">
+            </div>
+
+
+            <div class="responseOptions">
+                <div class="responseOption" *ngFor="let option of responses; let i = index" draggable="true"
+                    (dragstart)="drag($event, option)">
+                    <span class="material-symbols-outlined icon">drag_indicator</span>
+                    <div class="option">{{ option ? option : 'Response ' + (i + 1) }}</div>
+                </div>
+            </div>
+
+            <button routerLink="/preview-question">Preview</button>
+            <button (click)="saveQuestion()">Save Question</button>
         </div>
     </div>
 </div>

@@ -1,0 +1,28 @@
+<app-preview-question-header></app-preview-question-header>
+
+<div class="body">
+    <div class="previwQuestionSec">
+        <div class="correctAnsDiv">
+            <div class="question">
+                <span class="questionNumber">Q1:</span>
+                {{question}}
+            </div>
+            <div class="ansDiv">
+                <div #draggableElement class="textPhrase" [innerHTML]="textPhrase">
+                </div>
+
+                <div class="responseOptions">
+                    <ng-container *ngFor="let option of responses; let i = index">
+                        <div class="responseOption" *ngIf="option.response !== ''" draggable="true"
+                            (dragstart)="drag($event, option.response)">
+                            <span class="material-symbols-outlined icon">drag_indicator</span>
+                            <div class="option">{{ option.response || 'Response ' + (i + 1) }}</div>
+                        </div>
+                    </ng-container>
+                </div>
+
+                <button class="checkAns" routerLink="/create-question">Check</button>
+            </div>
+        </div>
+    </div>
+</div>

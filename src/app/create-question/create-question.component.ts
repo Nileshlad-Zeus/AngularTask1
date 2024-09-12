@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild, AfterViewInit } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { QuestionService } from '../shared/question.service';
 
 @Component({
   selector: 'app-create-question',
@@ -14,65 +14,85 @@ export class CreateQuestionComponent implements AfterViewInit {
     textPhrase: '',
     responses: [{ response: '' }]
   };
-  formattedText: string = "";
 
-  responses: string[] = [""];
+  responses: string[] = [];
   tokan: string[] = [];
   draggedResponse: string = '';
 
+  tempresponse: string = '';
+
   @ViewChild('textAreaElement') textAreaElement!: ElementRef;
   @ViewChild('draggableElement') draggableElement!: ElementRef;
+  @ViewChild('questionlabel') questionlabel!: ElementRef;
 
   constructor(
-    private sanitizer: DomSanitizer,
     private renderer: Renderer2,
-    private elRef: ElementRef
+    private questionService: QuestionService
   ) {
+
+  }
+  ngOnInit() {
 
   }
 
   ngAfterViewInit() {
     const draggable = this.draggableElement.nativeElement;
-    console.log(draggable);
-    // this.renderer.listen(draggable, 'click', (e) => {
-    //   console.log('Draggable element clicked!');
-    //   console.log(e.target)
-    // });
-
     this.renderer.listen(draggable, 'dragover', (e: DragEvent) => {
       e.preventDefault();
     });
 
 
     this.renderer.listen(draggable, 'drop', (e: DragEvent) => {
-      console.log("Drop");
-
       e.preventDefault();
       const droppedData = e.dataTransfer?.getData('text/plain');
       if (droppedData && e.target instanceof HTMLElement) {
         e.target.innerText = droppedData;
-        console.log(droppedData)
-        // const span = this.renderer.createElement('span');
-        // const text = this.renderer.createText(droppedData);
-
-        // this.renderer.appendChild(span, text);
       }
     });
   }
 
   addResponse() {
     this.questionData.responses.push({ response: '' });
-    this.responses.push('');
+    this.responses.push(this.tempresponse);
+    console.log(this.tempresponse);
   }
 
-  onResponseChange(value: string, index: number) {
-    this.responses[index] = value;
+  onResponseChange(value: string) {
+    this.tempresponse = value;
+  }
+
+  onResponseChangeQuestion(value: string) {
+    if (value) {
+      this.renderer.setStyle(this.questionlabel.nativeElement, 'transform', 'translateY(-20px)');
+      this.renderer.setStyle(this.questionlabel.nativeElement, 'font-size', '12px');
+    } else {
+      this.renderer.removeStyle(this.questionlabel.nativeElement, 'transform');
+      this.renderer.removeStyle(this.questionlabel.nativeElement, 'font-size');
+    }
   }
 
 
   removeResponse(index: number) {
     this.questionData.responses.splice(index, 1);
     this.responses.splice(index, 1);
+  }
+
+  saveQuestion() {
+    this.questionService.addQuestion(this.questionData);
+    // this.resetQuestion();
+  }
+
+  resetQuestion() {
+    // this.questionData = {
+    //   question: '',
+    //   textPhrase: '',
+    //   responses: [{ response: '' }]
+    // };
+
+    // this.responses = []
+
+    // const textArea = this.textAreaElement.nativeElement as HTMLDivElement;
+    // textArea.innerHTML="";
   }
 
   addToken() {
@@ -115,7 +135,6 @@ export class CreateQuestionComponent implements AfterViewInit {
       textArea.focus();
     }, 0);
     this.updateTextPhrase()
-    console.log(this.draggableElement.nativeElement)
   }
 
 
@@ -138,43 +157,9 @@ export class CreateQuestionComponent implements AfterViewInit {
     const textArea = this.textAreaElement.nativeElement as HTMLDivElement;
     this.questionData.textPhrase = textArea.innerHTML;
   }
+
+  getData() {
+    console.log("GET DATA");
+    console.log(this.questionService.getQuestions())
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-// getFormattedText(): SafeHtml {
-//   let tokenCounter = 0;
-//   const rawHtml = this.questionData.textPhrase.replace(/\[TOKEN\]/g, () => {
-//     const tokenValue = this.tokan[tokenCounter] || `Token ${tokenCounter + 1}`;
-//     const tokenHtml = `<span
-//       class="token" style="
-//         background-color: #FFFFFF;
-//         width: 90px;
-//         height: 32px;
-//         border: 1px dashed rgba(0, 0, 0, 0.77);
-//         display: inline-block;
-//         text-align: center;
-//         line-height: 32px;
-//         box-sizing: border-box;
-//         position: relative;
-//         top: 10px"
-//         id="token-${tokenCounter}"
-//           (dragover)="allowDrop($event)"
-//         (drop)="drop($event, i)"
-//         >
-//         ${tokenValue}
-//       </span>`;
-
-//     tokenCounter++;
-//     return tokenHtml;
-//   });
-//   return this.sanitizer.bypassSecurityTrustHtml(rawHtml);
-// }

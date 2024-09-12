@@ -1,0 +1,105 @@
+.createNewQuestionHeader {
+    background-color: #3C4E62;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+
+    .backBtn {
+        color: #3FD28B;
+        font-size: 24px;
+    }
+
+    .heading {
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .btnGroup {
+        display: flex;
+        gap: 16px;
+
+        button {
+            width: 90px;
+            height: 28px;
+            background-color: #3FD28B;
+            text-transform: uppercase;
+            font-weight: 600;
+            border-radius: 2px;
+            border: none;
+            box-shadow: 0px 3px 6px #0000001F;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    }
+}
+
+.createNewQuestionSubHeader {
+    background-color: #EEEEEE;
+    display: flex;
+    justify-content: space-between;
+    padding: 30px 40px 25px;
+
+    .testName {
+        font-size: 20px;
+        font-weight: bold;
+        color: #222222;
+        position: relative;
+
+        span {
+            position: absolute;
+            font-size: 12px;
+            font-weight: 500;
+            color: #666666;
+            top: 4px;
+            right: -55px;
+        }
+    }
+}
+
+.progressDiv-Body {
+    background-color: #EEEEEE;
+    padding: 0 40px;
+
+    .progressDiv {
+        height: 56px;
+        background-color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 24px;
+
+        .progressStep {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            span {
+                background-color: #3FD28B;
+                border-radius: 50%;
+                width: 32px;
+                height: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 600;
+                font-size: 16px;
+            }
+
+            p {
+                font-size: 16px;
+                font-weight: 600;
+                color: #222222;
+            }
+
+        
+        }
+        hr{
+            flex: 1;
+            margin: 0 30px;
+            background-color: #222222;
+            opacity: 0.4;
+         }
+    }
+}

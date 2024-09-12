@@ -1,11 +1,18 @@
+.body {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #EEEEEE;
+    padding-top: 24px;
+}
+
 .createQuestionSection {
     background-color: white;
-    margin: 24px auto;
-    width: 95%;
+    margin: 24px 40px;
+
+    width: auto;
     display: flex;
     flex-direction: column;
     padding: 51px 24px 24px;
-
 
 
 
@@ -72,6 +79,14 @@
             transition: 0.2s;
             font-size: 16px;
             font-weight: 600;
+        }
+
+    }
+
+    .textPhraseDiv {
+        label {
+            transform: translateY(-20px);
+            font-size: 12px;
         }
     }
 
