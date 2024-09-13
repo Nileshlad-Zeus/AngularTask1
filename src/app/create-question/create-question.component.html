@@ -1,4 +1,3 @@
-
 <div class="body">
     <div class="createQuestionSection">
         <div class="inputField">
@@ -51,7 +50,7 @@
 
         <div class="correctAnsDiv">
             <p class="label">Correct Answer*</p>
-            <div #draggableElement class="question" [innerHTML]="questionData.textPhrase">
+            <div #draggableElement class="question" [innerHTML]="sanitizedTextPhrase">
             </div>
 
 
@@ -62,9 +61,6 @@
                     <div class="option">{{ option ? option : 'Response ' + (i + 1) }}</div>
                 </div>
             </div>
-
-            <button routerLink="/preview-question">Preview</button>
-            <button (click)="saveQuestion()">Save Question</button>
         </div>
     </div>
 </div>

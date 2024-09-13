@@ -10,16 +10,20 @@ export class PreviewQuestionComponent implements OnInit, AfterViewInit {
   question: string = "";
   textPhrase: string = "";
   responses: any;
+  previewQuestionTemp: any;
 
   @ViewChild('draggableElement') draggableElement!: ElementRef;
 
   constructor(private questionService: QuestionService, private renderer: Renderer2) { }
 
   ngOnInit() {
-    this.questionData = this.questionService.getQuestions();
-    this.question = this.questionData[0]?.question;
-    this.textPhrase = this.questionData[0]?.textPhrase;
-    this.responses = this.questionData[0].responses;
+    this.previewQuestionTemp = JSON.parse(localStorage.getItem("previewQuestion")!);
+    this.questionData = this.questionService.getPreviewQuestion() || this.previewQuestionTemp;
+    console.log(this.questionData);
+    
+    this.question = this.questionData?.question;
+    this.textPhrase = this.questionData?.textPhrase;
+    this.responses = this.questionData.responses;
   }
   ngAfterViewInit() {
     const draggable = this.draggableElement.nativeElement;

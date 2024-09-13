@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+import { Subject } from 'rxjs';
 
 interface QuestionData {
   question: string;
@@ -12,24 +12,34 @@ interface QuestionData {
 export class QuestionService {
 
   // private questions: QuestionData[] = [];
-  private questions: QuestionData[] = [
-    {
-      "question": "How are you?",
-      "textPhrase": "adsds <span class=\"token\" contenteditable=\"false\" style=\"background-color: rgba(34, 34, 34, 0.12); width: 80px; height: 24px; border: none; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; margin-right: 8px; margin-left: 8px;\">Token</span>dsds",
-      "responses": [
-        {
-          "response": "a"
-        },
-        {
-          "response": "an"
-        },
-        {
-          "response": ""
-        }
-      ]
-    }
-  ]
+  private questions: QuestionData[] = []
+  private previewQuestion: any;
+
   constructor() { }
+
+  private saveQuestionTrigger = new Subject<void>();
+  saveQuestionTriggered$ = this.saveQuestionTrigger.asObservable();
+
+  private saveAndPreviewTrigger = new Subject<void>();
+  saveAndPreviewTriggered$ = this.saveAndPreviewTrigger.asObservable();
+
+  triggerSaveQuestion() {
+    this.saveQuestionTrigger.next();
+  }
+
+  triggerSaveAndPreview() {
+    this.saveAndPreviewTrigger.next();
+  }
+
+  
+  setPreviewQuestion(data: QuestionData) {
+    this.previewQuestion = data;
+  }
+
+  getPreviewQuestion() {
+    return this.previewQuestion;
+  }
+
 
   getQuestions(): QuestionData[] {
     return this.questions;

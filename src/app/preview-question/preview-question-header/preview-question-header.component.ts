@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
     selector: "app-preview-question-header",
@@ -7,8 +8,14 @@ import { Component, OnInit } from "@angular/core";
 })
 
 export class PreviewQuestionHeaderComponent implements OnInit {
-    constructor() { }
+    constructor(private router: Router) { }
     ngOnInit() {
 
+    }
+    exitpreview(){
+        console.log("Exit");
+        
+        this.router.navigate(['/create-question']);
+        localStorage.removeItem("previewQuestion");
     }
 }
