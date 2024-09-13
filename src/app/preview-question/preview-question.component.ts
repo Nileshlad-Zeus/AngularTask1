@@ -23,6 +23,9 @@ export class PreviewQuestionComponent implements OnInit, AfterViewInit {
   tempcorrectAns: CorrectAnswer[] = [];
   correctAns: CorrectAnswer[] = [];
 
+  isChecked: boolean = false;
+  isShowCorrectAns: boolean = false;
+
   sanitizedTextPhrase!: SafeHtml;
 
   @ViewChild('draggableElement') draggableElement!: ElementRef;
@@ -40,15 +43,7 @@ export class PreviewQuestionComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
-    this.previewQuestionTemp = JSON.parse(localStorage.getItem("previewQuestion")!);
-    this.questionData = this.questionService.getPreviewQuestion() || this.previewQuestionTemp;
-    console.log(this.questionData);
-
-    this.question = this.questionData?.question;
-    this.textPhrase = this.questionData?.textPhrase;
-    this.sanitizedTextPhrase = this.sanitizer.bypassSecurityTrustHtml(this.cleanHTML(this.questionData?.textPhrase || ''));
-    this.correctAns = this.questionData.correctAns;
-    this.responses = this.questionData.responses;
+    this.fetchData()
   }
   ngAfterViewInit() {
     const draggable = this.draggableElement.nativeElement;
@@ -73,11 +68,24 @@ export class PreviewQuestionComponent implements OnInit, AfterViewInit {
     });
   }
 
+  fetchData() {
+    this.previewQuestionTemp = JSON.parse(localStorage.getItem("previewQuestion")!);
+    this.questionData = this.questionService.getPreviewQuestion() || this.previewQuestionTemp;
+    console.log(this.questionData);
+
+    this.question = this.questionData?.question;
+    this.textPhrase = this.questionData?.textPhrase;
+    this.sanitizedTextPhrase = this.sanitizer.bypassSecurityTrustHtml(this.cleanHTML(this.questionData?.textPhrase || ''));
+    this.correctAns = this.questionData.correctAns;
+    this.responses = this.questionData.responses;
+  }
+
   drag(event: DragEvent, response: string) {
     event.dataTransfer?.setData('text/plain', response);
   }
 
   checkAns() {
+    this.isChecked = true;
     const matchedAnswers = this.correctAns.filter(correctItem => {
       return this.tempcorrectAns.some(tempItem =>
         tempItem.id === correctItem.id && tempItem.ans === correctItem.ans
@@ -128,7 +136,17 @@ export class PreviewQuestionComponent implements OnInit, AfterViewInit {
         console.log(`Element with id ${ele.id} not found`);
       }
     })
-    // console.log(matchedAnswers);
+  }
 
+  showCorrectAns(){
+this.isShowCorrectAns = true;
+  }
+
+  tryAgain() {
+    this.isShowCorrectAns = false;
+    this.isChecked = false;
+    this.correctAns = [];
+    this.tempcorrectAns = [];
+    this.fetchData()
   }
 }

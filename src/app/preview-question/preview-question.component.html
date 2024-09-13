@@ -21,8 +21,22 @@
                     </ng-container>
                 </div>
 
-                <button class="checkAns" (click)="checkAns()">Check</button>
+                <button class="checkAns"  *ngIf="!isChecked" (click)="checkAns()">Check</button>
+                <div class="btnGroup"  *ngIf="isChecked">
+                    <button class="checkAns" (click)="tryAgain()">Try Again</button>
+                    <button class="checkAns" (click)="showCorrectAns()">Show Correct ans</button>
+                </div>
+
+                <div class="showCorrectAnsDiv" *ngIf="isShowCorrectAns">
+                    <h3 class="label">Correct Answer:</h3>
+                    <div class="showCorrectAns">
+                        <ul>
+                          <li *ngFor="let answer of correctAns">{{ answer.ans }}</li>
+                        </ul>
+                      </div>
+                </div>
             </div>
+
         </div>
     </div>
 </div>
