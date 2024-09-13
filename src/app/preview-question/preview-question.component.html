@@ -8,7 +8,7 @@
                 {{question}}
             </div>
             <div class="ansDiv">
-                <div #draggableElement class="textPhrase" [innerHTML]="textPhrase">
+                <div #draggableElement class="textPhrase" [innerHTML]="sanitizedTextPhrase">
                 </div>
 
                 <div class="responseOptions">
@@ -21,7 +21,7 @@
                     </ng-container>
                 </div>
 
-                <button class="checkAns" >Check</button>
+                <button class="checkAns" (click)="checkAns()">Check</button>
             </div>
         </div>
     </div>

@@ -187,10 +187,18 @@ export class CreateQuestionComponent implements OnInit, AfterViewInit {
     this.tokan[tokenIndex] = this.draggedResponse;
   }
 
+  cleanHTML(html: string): string {
+    const noStyleTags = html.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '');
+
+    const noInlineStyles = noStyleTags.replace(/ style="[^"]*"/gi, '');
+  
+    return noInlineStyles;
+  }
   updateTextPhrase() {
     const textArea = this.textAreaElement.nativeElement as HTMLDivElement;
     const rawHtml = textArea.innerHTML;
-    this.sanitizedTextPhrase = this.sanitizer.bypassSecurityTrustHtml(rawHtml);
+    // this.sanitizedTextPhrase = this.sanitizer.bypassSecurityTrustHtml(rawHtml);
+    this.sanitizedTextPhrase = this.sanitizer.bypassSecurityTrustHtml(this.cleanHTML(rawHtml || ''));
     this.questionData.textPhrase = rawHtml;
   }
 

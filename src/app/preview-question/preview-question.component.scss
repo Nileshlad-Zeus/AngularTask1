@@ -21,8 +21,9 @@
             .textPhrase {
                 padding-bottom: 16px;
                 font: normal normal 600 16px/20px "Quicksand";
-                display: inline-block;
+                display: inline-flex;
                 line-height: 40px;
+                align-items: center;
             }
 
             .responseOptions {
@@ -81,4 +82,21 @@
     line-height: 32px;
     box-sizing: border-box;
     margin: 0 10px;
+}
+
+::ng-deep .checkAnsStatus {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 10px;
+    align-items: center;
+    width: 122px;
+
+    div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        width: 32px;
+        height: 32px;
+    }
 }
