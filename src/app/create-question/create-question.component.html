@@ -5,11 +5,13 @@
                 (ngModelChange)="onResponseChangeQuestion($event)" />
             <label for="question" #questionlabel>Question(Stem)*</label>
         </div>
+        <p class="errorMsg" *ngIf="errorStatus.question">Question (Stem) is required</p>
         <div class="inputField textPhraseDiv">
             <div class="textphrase" contenteditable="true" (input)="updateTextPhrase()" #textAreaElement>
             </div>
             <label for="textphrase">Text Phrase*</label>
         </div>
+        <p class="errorMsg" *ngIf="errorStatus.textPhrase">Text Phrase is required</p>
         <br>
         <button class="btn addTokenBtn" (click)="addToken()">Add Token</button>
 
@@ -19,14 +21,19 @@
                 <div *ngFor="let option of questionData.responses; let i = index" class="option">
                     <div class="optionInputDiv">
                         <span class="material-symbols-outlined">drag_indicator</span>
-                        <input type="text" [placeholder]="'Response ' + (i + 1)" [(ngModel)]="option.response"
-                            (ngModelChange)="onResponseChange($event)">
+                        <input type="text" [(ngModel)]="option.response" (ngModelChange)="onResponseChange($event)">
                     </div>
-                    <span class="material-symbols-outlined icon delete-icon" (click)="removeResponse(i)">delete</span>
+                    <span class="material-symbols-outlined icon-disabled delete-icon"
+                        [ngClass]="{'icon-disabled': !responses[i], 'icon-enabled': responses[i]}"
+                        (click)="removeResponse(i, option.response)">
+                        delete
+                    </span>
                 </div>
             </div>
+            <p class="errorMsg" *ngIf="errorStatus.responses">Response is required</p>
             <button class="addResonseBtn btn" (click)="addResponse()">Add Response</button>
         </div>
+
 
         <div class="setCorrectAnsDiv">
             <p class="label">Set Correct Answers*</p>
@@ -49,10 +56,11 @@
         </div>
 
         <div class="correctAnsDiv">
-            <p class="label">Correct Answer*</p>
+            <p class="label" *ngIf="questionData.textPhrase">Correct Answer*</p>
             <div #draggableElement class="question" [innerHTML]="sanitizedTextPhrase">
             </div>
 
+            <P class="noTextAdded" *ngIf="!questionData.textPhrase">No text or tokens have been added yet.</P>
 
             <div class="responseOptions">
                 <div class="responseOption" *ngFor="let option of responses; let i = index" draggable="true"
@@ -61,6 +69,7 @@
                     <div class="option">{{ option ? option : 'Response ' + (i + 1) }}</div>
                 </div>
             </div>
+            <p class="errorMsg" *ngIf="errorStatus.correctAns">Kindly Fill the Answers</p>
         </div>
     </div>
 </div>

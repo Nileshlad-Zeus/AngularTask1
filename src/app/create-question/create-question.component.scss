@@ -39,10 +39,6 @@
         border-bottom: 2px solid #00000027;
         position: relative;
 
-        &:nth-child(2) {
-            margin-top: 83px;
-        }
-
         input {
             border: none;
             outline: none;
@@ -84,6 +80,8 @@
     }
 
     .textPhraseDiv {
+        margin-top: 83px;
+
         label {
             transform: translateY(-20px);
             font-size: 12px;
@@ -94,7 +92,6 @@
         margin-top: 33px;
 
         .responseOptions {
-            margin-bottom: 44px;
             display: flex;
             flex-direction: column;
             gap: 39px;
@@ -125,12 +122,12 @@
             .delete-icon {
                 cursor: pointer;
                 color: #1E7953;
-                opacity: .4;
                 margin-left: 8px;
             }
         }
 
         .addResonseBtn {
+            margin-top: 16px;
             width: 136px;
             height: 28px;
             background-color: #E2F8FE;
@@ -211,6 +208,16 @@
                 }
             }
         }
+
+        .noTextAdded {
+            text-align: center;
+            color: #666666;
+            font-size: 12px;
+            line-height: 14px;
+            font-weight: 600;
+            padding-top: 17px;
+            padding-bottom: 19px;
+        }
     }
 }
 
@@ -233,4 +240,20 @@
     line-height: 32px;
     box-sizing: border-box;
     margin: 0 10px;
+}
+
+.errorMsg {
+    color: #B00020;
+    font-size: 12px;
+    line-height: 15px;
+    font-weight: bold;
+    padding-top: 8px;
+}
+
+.icon-disabled {
+    opacity: .4;
+}
+
+.icon-enabled {
+    opacity: 1;
 }

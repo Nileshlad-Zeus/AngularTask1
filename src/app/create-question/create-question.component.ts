@@ -3,7 +3,7 @@ import { QuestionService } from '../shared/question.service';
 import { Subscription } from 'rxjs';
 import { NgZone } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-
+import { Router } from '@angular/router';
 
 interface CorrectAnswer {
   id: string;
@@ -23,8 +23,17 @@ export class CreateQuestionComponent implements OnInit, AfterViewInit {
     question: '',
     textPhrase: '',
     responses: [{ response: '' }],
-    correctAns: [] as CorrectAnswer[]
+    correctAns: [] as CorrectAnswer[],
+    isShuffle: false,
+    isDuplicate: false
   };
+
+  errorStatus = {
+    question: false,
+    textPhrase: false,
+    responses: false,
+    correctAns: false
+  }
   private saveQuestionSubscription!: Subscription;
   private saveAndPreviewSubscription!: Subscription;
 
@@ -44,7 +53,8 @@ export class CreateQuestionComponent implements OnInit, AfterViewInit {
     private renderer: Renderer2,
     private questionService: QuestionService,
     private ngZone: NgZone,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private router: Router
   ) {
 
 
@@ -82,8 +92,14 @@ export class CreateQuestionComponent implements OnInit, AfterViewInit {
   }
 
   addResponse() {
-    this.questionData.responses.push({ response: '' });
-    this.responses.push(this.tempresponse);
+    this.errorStatus.responses = false;
+    let length = this.questionData.responses.length;
+    if (this.questionData.responses[length - 1].response) {
+      this.questionData.responses.push({ response: '' });
+      this.responses.push(this.tempresponse);
+    } else {
+      this.errorStatus.responses = true;
+    }
   }
 
   onResponseChange(value: string) {
@@ -101,9 +117,11 @@ export class CreateQuestionComponent implements OnInit, AfterViewInit {
   }
 
 
-  removeResponse(index: number) {
-    this.questionData.responses.splice(index, 1);
-    this.responses.splice(index, 1);
+  removeResponse(index: number, response: string) {
+    if (response && this.responses[index]) {
+      this.questionData.responses.splice(index, 1);
+      this.responses.splice(index, 1);
+    }
   }
 
 
@@ -111,9 +129,25 @@ export class CreateQuestionComponent implements OnInit, AfterViewInit {
     this.questionService.addQuestion(this.questionData);
   }
 
+  countSpans(textPhrase: string) {
+    const tempElement = document.createElement('div');
+    tempElement.innerHTML = textPhrase;
+    const spanElements = tempElement.getElementsByTagName('span');
+    return spanElements.length;
+  }
   saveAndPreview() {
-    this.questionService.setPreviewQuestion(this.questionData);
-    localStorage.setItem("previewQuestion", JSON.stringify(this.questionData));
+    this.errorStatus.question = !this.questionData.question;
+    this.errorStatus.textPhrase = !this.questionData.textPhrase;
+    this.errorStatus.responses = (this.questionData.responses.length < 2) ? true : false;
+
+    let countSpans = this.countSpans(this.questionData.textPhrase);
+    this.errorStatus.correctAns = !(countSpans === this.questionData.correctAns.length);
+
+    if (!this.errorStatus.question && !this.errorStatus.textPhrase && !this.errorStatus.responses && !this.errorStatus.correctAns) {
+      this.questionService.setPreviewQuestion(this.questionData);
+      localStorage.setItem("previewQuestion", JSON.stringify(this.questionData));
+      this.router.navigate(['/preview-question']);
+    }
   }
 
 
@@ -191,7 +225,7 @@ export class CreateQuestionComponent implements OnInit, AfterViewInit {
     const noStyleTags = html.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '');
 
     const noInlineStyles = noStyleTags.replace(/ style="[^"]*"/gi, '');
-  
+
     return noInlineStyles;
   }
   updateTextPhrase() {

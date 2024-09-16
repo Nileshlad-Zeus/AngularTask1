@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { QuestionService } from '../shared/question.service';
 
 @Component({
@@ -8,16 +7,13 @@ import { QuestionService } from '../shared/question.service';
   styleUrls: ['./create-new-question-header.component.scss']
 })
 export class CreateNewQuestionHeaderComponent implements OnInit {
-  constructor(private router: Router, private questionService: QuestionService) { };
+  constructor(private questionService: QuestionService) { };
   ngOnInit() {
 
   }
 
   preview() {
     console.log("Preview Trigger");
-    
-    // this.questionService.triggerSaveQuestion();
     this.questionService.triggerSaveAndPreview();
-    this.router.navigate(['/preview-question']);
   }
 }
